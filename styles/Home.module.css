@@ -46,7 +46,7 @@
 .title{
   font-size: 40px;
   font-weight: 500;
-  text-shadow: 1px 2px 1px #000;
+  text-shadow: 1px 2px 0.6px rgb(100, 100, 100);
   text-transform: capitalize;
 }
 

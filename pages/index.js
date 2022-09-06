@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Color from 'color-thief-react'
+import Loader from '../src/components/loader';
 
 export default function Home() {
   const [searchPokemon, setSearchPokemon] = useState("");
@@ -11,9 +12,10 @@ export default function Home() {
   const IMAGE_URI = pokemon.sprites?.other["official-artwork"].front_default
 
   const getPokemon = (name) => {
+    setLoading(true)
     axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-      .then((res) => {
-        setPokemon(res.data)
+      .then(({data}) => {
+        setPokemon(data)
         setLoading(false)
       })
       .catch(() => {
@@ -22,7 +24,7 @@ export default function Home() {
   }
 
   const handleSearchPokemon = () => {
-    getPokemon(searchPokemon)
+    getPokemon(searchPokemon.toLowerCase())
   }
 
   useEffect(() => {
@@ -30,17 +32,13 @@ export default function Home() {
   }, [])
 
   if (loading) {
-    return (
-      <div style={{ height: "100vh", margin: "0 auto" }}>
-        Carregando...
-      </div>
-    )
+    return <Loader/>
   }
 
   return (
     <Color src={IMAGE_URI} crossOrigin="anonymous" format="hex">
       {({ data, loading }) => {
-        if (loading) return <>Loading...</>
+        if (loading) return <Loader/>
 
         return (
           <div className={styles.container} style={{ backgroundColor: data }}>
@@ -54,7 +52,7 @@ export default function Home() {
                   <span className={styles.fontInfo}>Weight: {pokemon.weight}kg</span>
                 </div>
                 <div>
-                  <Image src={pokemon.sprites?.other["official-artwork"].front_default} width={500} height={500} />
+                  <Image src={IMAGE_URI} width={500} height={500} />
                 </div>
               </div>
 
@@ -62,33 +60,18 @@ export default function Home() {
                 <span className={styles.title}>Base Stats</span>
 
                 <div className={styles.infoPokemon}>
-                  <div className={styles.cardInfo}>
-                    HP: {pokemon.stats[0].base_stat}
-                  </div>
-                  <div className={styles.cardInfo}>
-                    ATTACK: {pokemon.stats[1].base_stat}
-                  </div>
-                  <div className={styles.cardInfo}>
-                    DEFENSE: {pokemon.stats[2].base_stat}
-                  </div>
-                  <div className={styles.cardInfo}>
-                    SP. ATTACK: {pokemon.stats[3].base_stat}
-                  </div>
-                  <div className={styles.cardInfo}>
-                    SP. DEFENSE: {pokemon.stats[4].base_stat}
-                  </div>
-                  <div className={styles.cardInfo}>
-                    SPEED: {pokemon.stats[5].base_stat}
-                  </div>
+                  {pokemon.stats.map((status, index) => (
+                    <div className={styles.cardInfo} key={index}>
+                      {status.stat.name.toUpperCase()}: {status.base_stat}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
             <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <input required value={searchPokemon} onChange={(e) => setSearchPokemon(e.target.value)} />
-              <input type={"submit"} onClick={() => {
-                if (searchPokemon) handleSearchPokemon()
-              }} value={"Pesquisar"} />
+              <input required value={searchPokemon} onChange={(e) => setSearchPokemon(e.target.value)} placeholder="Gengar"/>
+              <input type={"submit"} onClick={() => {if (searchPokemon) handleSearchPokemon()}} value={"Pesquisar"} />
             </form>
           </div>
         )
