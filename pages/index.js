@@ -24,7 +24,7 @@ export default function Home() {
         setChinesePokemon(pokemonName.getName(data.id || 143, "ja"))
       })
       .catch(() => {
-        alert(`Pokemon não encontrado.\n\nRedirecionando para: ${defaultPokemon}`)
+        alert(`Pokemon ${searchPokemon.toLocaleUpperCase()} não encontrado.\n\nRedirecionando para: ${defaultPokemon}`)
         getPokemon(defaultPokemon)
       })
       .finally(() => {
