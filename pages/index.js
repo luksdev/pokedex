@@ -38,8 +38,8 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <div>
-        <span>{pokemon.name}</span>
+      <div className={styles.header}>
+        <span className={styles.title} style={{padding: "5rem"}}>{pokemon.name}</span>
       </div>
       <div className={styles.main}>
         <div className={styles.leftSide}>

@@ -18,7 +18,10 @@
   align-items: center;
   height: 70%;
   width: 100%;
-  background-color: red;
+}
+
+.header{
+  width: 100%;
 }
 
 .leftSide{
@@ -43,6 +46,7 @@
   font-size: 40px;
   font-weight: 500;
   text-shadow: 0 0 1px #000;
+  text-transform: capitalize;
 }
 
 .infoPokemon{
