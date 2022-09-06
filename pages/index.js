@@ -21,11 +21,14 @@ export default function Home() {
       .then(({ data }) => {
         setPokemon(data)
         setLoading(false)
-        setChinesePokemon(pokemonName.getName(pokemon.id || 143, "ja"))
+        setChinesePokemon(pokemonName.getName(data.id || 143, "ja"))
       })
       .catch(() => {
         alert(`Pokemon não encontrado.\n\nRedirecionando para: ${defaultPokemon}`)
         getPokemon(defaultPokemon)
+      })
+      .finally(() => {
+        setSearchPokemon("")
       })
   }
 
