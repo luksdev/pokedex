@@ -5,14 +5,15 @@ import Image from 'next/image';
 import Color from 'color-thief-react'
 import Loader from '../src/components/loader';
 import pokemonName from "pokemon"
+import Head from 'next/head';
 
 export default function Home() {
+  const [defaultPokemon] = useState("snorlax")
   const [searchPokemon, setSearchPokemon] = useState("");
   const [chinesePokemon, setChinesePokemon] = useState("");
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
-  const IMAGE_URI = pokemon.sprites?.other["official-artwork"].front_default
-
+  const IMAGE_URI = pokemon.sprites?.other["official-artwork"].front_default;
 
   const getPokemon = (name) => {
     setLoading(true)
@@ -23,7 +24,8 @@ export default function Home() {
         setChinesePokemon(pokemonName.getName(pokemon.id || 143, "ja"))
       })
       .catch(() => {
-        alert("Pokemon não encontrado.")
+        alert(`Pokemon não encontrado.\n\nRedirecionando para: ${defaultPokemon}`)
+        getPokemon(defaultPokemon)
       })
   }
 
@@ -32,7 +34,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getPokemon("snorlax")
+    getPokemon(defaultPokemon)
   }, [])
 
   if (loading) {
@@ -46,6 +48,11 @@ export default function Home() {
 
         return (
           <div className={styles.container} style={{ backgroundColor: data }}>
+            <Head>
+              <title>Pokedex</title>
+              <meta name="description" content="Pokedex" />
+              <link rel="icon" href="favicon.ico" />
+            </Head>
             <div className={styles.header}>
               <span className={styles.identify} style={{ paddingLeft: "5rem" }}>#{pokemon.id}</span>
               <span className={styles.title} style={{ paddingLeft: "5rem" }}>{pokemon.name}</span>
