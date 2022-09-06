@@ -23,6 +23,8 @@
 
 .header{
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .leftSide{
@@ -34,6 +36,16 @@
   flex-direction: column;
   padding-top: 10rem;
   padding-right: 5rem;
+}
+
+.chineseText{
+  font-weight: 600;
+  font-size: 150px;
+  opacity: 0.2;
+  position: absolute;
+  z-index: 999;
+  top: 20%;
+  left: 10%;
 }
 
 .fontInfo{
@@ -48,6 +60,12 @@
   font-weight: 500;
   text-shadow: 1px 2px 0.6px rgb(100, 100, 100);
   text-transform: capitalize;
+}
+
+.identify{
+  font-size: 22px;
+  font-weight: 500;
+  text-shadow: 1px 2px 0.6px rgb(100, 100, 100);
 }
 
 .infoPokemon{
@@ -68,4 +86,11 @@
   width: max-content;
   color: #303030;
   font-weight: bold;
+}
+
+.inputStyle{
+  padding: 10px;
+  background-color: rgb(226, 226, 226);
+  border-radius: 4px;
+  border: none;
 }
