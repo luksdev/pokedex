@@ -9,7 +9,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   const getPokemon = (name) => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/aurorus`)
+    axios.get(`https://pokeapi.co/api/v2/pokemon/umbreon`)
       .then((res) => {
         setPokemon(res.data)
         setLoading(false)
